@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import AppointmentBookingForm
-from hms_app.models import Appointment, Patient # Import Patient model as well
+from hms.models import Appointment, Patient # Import Patient model as well
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required # Import login_required
 
