@@ -53,8 +53,8 @@ class Migration(migrations.Migration):
                 ('appointment_date', models.DateTimeField(verbose_name='Appointment Date & Time')),
                 ('reason', models.TextField(verbose_name='Reason for Appointment')),
                 ('status', models.CharField(choices=[('Scheduled', 'Scheduled'), ('Confirmed', 'Confirmed'), ('Completed', 'Completed'), ('Cancelled', 'Cancelled')], default='Scheduled', max_length=20, verbose_name='Status')),
-                ('doctor', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='appointments', to='hms_app.doctor', verbose_name='Doctor')),
-                ('patient', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='appointments', to='hms_app.patient', verbose_name='Patient')),
+                ('doctor', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='appointments', to='hms.doctor', verbose_name='Doctor')),
+                ('patient', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='appointments', to='hms.patient', verbose_name='Patient')),
             ],
             options={
                 'verbose_name': 'Appointment',
@@ -72,8 +72,8 @@ class Migration(migrations.Migration):
                 ('payment_method', models.CharField(blank=True, max_length=50, null=True, verbose_name='Payment Method')),
                 ('invoice_number', models.CharField(blank=True, max_length=50, null=True, unique=True, verbose_name='Invoice Number')),
                 ('notes', models.TextField(blank=True, null=True, verbose_name='Notes')),
-                ('appointment', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='bills', to='hms_app.appointment', verbose_name='Appointment')),
-                ('patient', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='bills', to='hms_app.patient', verbose_name='Patient')),
+                ('appointment', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='bills', to='hms.appointment', verbose_name='Appointment')),
+                ('patient', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='bills', to='hms.patient', verbose_name='Patient')),
             ],
             options={
                 'verbose_name': 'Bill',

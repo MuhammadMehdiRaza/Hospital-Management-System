@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-      'hms_app',         # Core HMS app for models
+      'hms',         # Core HMS app for models
      'doctor_app',      # Doctor features
      'patient_app',     # Patient features
      'receptionist_app', # Receptionist features
@@ -62,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+     'myproject.middleware.LogoutEveryPageMiddleware',
 ]
 
 ROOT_URLCONF = 'myproject.urls'
@@ -145,3 +146,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = '/'  # Redirect to the homepage after login (you can change this later)
 LOGOUT_REDIRECT_URL = '/' # Redirect to the homepage after logout (you can change this later)
 LOGIN_URL = '/login/'  # Add this line to specify your login URL
+# sessions will expire when the user closes their browser
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
