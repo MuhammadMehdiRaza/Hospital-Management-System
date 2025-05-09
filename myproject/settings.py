@@ -52,6 +52,7 @@ INSTALLED_APPS = [
      'patient_app',     # Patient features
      'receptionist_app', # Receptionist features
      'admin_app',       # Administrator features
+      'auditlog',
 ]
 
 MIDDLEWARE = [
@@ -62,7 +63,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-     'myproject.middleware.LogoutEveryPageMiddleware',
+    #  'myproject.middleware.LogoutEveryPageMiddleware',
 ]
 
 ROOT_URLCONF = 'myproject.urls'
