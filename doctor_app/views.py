@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
-from hms.models import Appointment,Patient  # Import the Appointment model
+from hms.models import Appointment,Patient,LabTestOrder  # Import the Appointment model
 from django.contrib.auth.decorators import login_required # Import login_required
-from .forms import DoctorProfileForm
+from .forms import DoctorProfileForm,LabTestOrderForm
 
 @login_required
 def doctor_index(request):
@@ -40,3 +40,18 @@ def edit_profile(request):
     else:
         form = DoctorProfileForm(instance=doctor)
     return render(request, 'doctor_app/edit_profile.html', {'form': form})
+
+
+@login_required
+def order_lab_test(request):
+    doctor = request.user.doctor
+    if request.method == 'POST':
+        form = LabTestOrderForm(request.POST)
+        if form.is_valid():
+            lab_order = form.save(commit=False)
+            lab_order.doctor = doctor
+            lab_order.save()
+            return redirect('doctor_app:doctor_profile')
+    else:
+        form = LabTestOrderForm()
+    return render(request, 'doctor_app/order_lab_test.html', {'form': form})

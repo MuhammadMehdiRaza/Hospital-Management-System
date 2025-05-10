@@ -105,3 +105,20 @@ class Billing(models.Model):
     class Meta:
         verbose_name = "Bill"
         verbose_name_plural = "Bills"
+
+class LabTestOrder(models.Model):
+    TEST_STATUS = [
+        ('pending', 'Pending'),
+        ('approved', 'Approved'),
+        ('rejected', 'Rejected'),
+    ]
+
+    doctor = models.ForeignKey('Doctor', on_delete=models.CASCADE)
+    patient = models.ForeignKey('Patient', on_delete=models.CASCADE)
+    test_name = models.CharField(max_length=100)
+    notes = models.TextField(blank=True)
+    status = models.CharField(max_length=10, choices=TEST_STATUS, default='pending')
+    requested_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.test_name} for {self.patient} ({self.status})"

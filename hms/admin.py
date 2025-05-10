@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Patient, Doctor, Appointment, Billing
+from .models import Patient, Doctor, Appointment, Billing,LabTestOrder
 from auditlog.registry import auditlog
 import csv
 from django.http import HttpResponse
@@ -12,6 +12,23 @@ from django.urls import reverse
 # Auditlog registrations
 auditlog.register(Patient)
 auditlog.register(Appointment)
+
+@admin.register(LabTestOrder)
+class LabTestOrderAdmin(admin.ModelAdmin):
+    list_display = ('test_name', 'patient', 'doctor', 'status', 'requested_at')
+    list_filter = ('status', 'requested_at')
+    actions = ['approve_tests', 'reject_tests']
+
+    def approve_tests(self, request, queryset):
+        updated = queryset.update(status='approved')
+        self.message_user(request, f"{updated} test(s) approved.")
+    approve_tests.short_description = "Approve selected lab tests"
+
+    def reject_tests(self, request, queryset):
+        updated = queryset.update(status='rejected')
+        self.message_user(request, f"{updated} test(s) rejected.")
+    reject_tests.short_description = "Reject selected lab tests"
+
 
 @admin.register(Appointment)
 class AppointmentAdmin(admin.ModelAdmin):
