@@ -1,8 +1,7 @@
 from django.shortcuts import render,redirect
 from hms.models import Appointment,Patient  # Import the Appointment model
 from django.contrib.auth.decorators import login_required # Import login_required
-
-
+from .forms import DoctorProfileForm
 
 @login_required
 def doctor_index(request):
@@ -29,3 +28,15 @@ def doctor_profile_view(request):
 def doctor_patient_list(request):
     patients = Patient.objects.filter(appointments__doctor=request.user.doctor).distinct()
     return render(request, 'doctor_app/doctor_patient_list.html', {'patients': patients})
+
+
+def edit_profile(request):
+    doctor = request.user.doctor  # assumes one-to-one link between User and Doctor
+    if request.method == 'POST':
+        form = DoctorProfileForm(request.POST, instance=doctor)
+        if form.is_valid():
+            form.save()
+            return redirect('doctor_app:doctor_profile')
+    else:
+        form = DoctorProfileForm(instance=doctor)
+    return render(request, 'doctor_app/edit_profile.html', {'form': form})

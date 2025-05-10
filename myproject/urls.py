@@ -26,7 +26,8 @@ class LogoutAllowGET(LogoutView):
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('doctor/', include(('doctor_app.urls', 'doctor_app'), namespace='doctor_app')),
+    path('doctor/', include('doctor_app.urls', namespace='doctor_app')),
+
     path('patient/', include('patient_app.urls')),
     path('receptionist/', include('receptionist_app.urls')), # Add this line for receptionist app URLs    
     path('login/', auth_views.LoginView.as_view(), name='login'), # Login URL
