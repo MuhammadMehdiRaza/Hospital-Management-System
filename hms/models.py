@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User
 
 class Patient(models.Model):
     patient_id = models.AutoField(primary_key=True)
@@ -39,6 +40,13 @@ class Patient(models.Model):
         verbose_name_plural = "Patients"
 
 class Doctor(models.Model):
+    user           = models.OneToOneField(
+                       User,
+                       on_delete=models.CASCADE,
+                       related_name='doctor',
+                       null=True,
+                       blank=True,
+                     )
     doctor_id = models.AutoField(primary_key=True)
     first_name = models.CharField(max_length=100, verbose_name="First Name")
     last_name = models.CharField(max_length=100, verbose_name="Last Name")

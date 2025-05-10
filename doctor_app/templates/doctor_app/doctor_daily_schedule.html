@@ -4,14 +4,7 @@
     <title>Doctor Daily Schedule</title>
 </head>
 <body>
-    <h1>Doctor's Daily Schedule
-        <span style="float:right;">
-            {% if user.is_authenticated %}
-                <a href="{% url 'logout' %}">Logout</a>
-            {% endif %}
-        </span>
-    </h1>
-
+   
     {% if appointments %}
         <table>
             <thead>

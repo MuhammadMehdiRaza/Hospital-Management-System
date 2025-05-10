@@ -143,9 +143,12 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Authentication
+LOGIN_URL = '/login/'  # URL where requests are redirected for login
+LOGIN_REDIRECT_URL = '/doctor/profile/'  # Default redirect after login
+LOGOUT_REDIRECT_URL = '/login/'  # Where to redirect after logout
 
-LOGIN_REDIRECT_URL = '/'  # Redirect to the homepage after login (you can change this later)
-LOGOUT_REDIRECT_URL = '/' # Redirect to the homepage after logout (you can change this later)
-LOGIN_URL = '/login/'  # Add this line to specify your login URL
-# sessions will expire when the user closes their browser
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+# Session settings
+SESSION_COOKIE_AGE = 1209600  # 2 weeks in seconds (optional)
+SESSION_SAVE_EVERY_REQUEST = True  # Helps keep session alive
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # Persistent sessions

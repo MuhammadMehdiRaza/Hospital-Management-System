@@ -17,12 +17,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path , include
 from django.contrib.auth import views as auth_views # Import built-in auth views
+from django.contrib.auth.views import LogoutView
+ 
+class LogoutAllowGET(LogoutView):
+    def get(self, request, *args, **kwargs):
+        # call the logout logic (normally in post) then render template
+        return self.post(request, *args, **kwargs)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('doctor/', include('doctor_app.urls')),
+    path('doctor/', include(('doctor_app.urls', 'doctor_app'), namespace='doctor_app')),
     path('patient/', include('patient_app.urls')),
     path('receptionist/', include('receptionist_app.urls')), # Add this line for receptionist app URLs    
     path('login/', auth_views.LoginView.as_view(), name='login'), # Login URL
-    path('logout/', auth_views.LogoutView.as_view(), name='logout'), # Logout URL
+    path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
 ]

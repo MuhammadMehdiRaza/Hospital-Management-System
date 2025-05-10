@@ -1,7 +1,12 @@
 from django.urls import path
 from . import views
+from django.contrib.auth.decorators import login_required
+
+app_name = 'doctor_app'
 
 urlpatterns = [
-    path('patients/', views.doctor_patient_list, name='doctor_patient_list'), # Keep this or remove if you wish
-    path('schedule/', views.doctor_daily_schedule_view, name='doctor_daily_schedule'), # Add this line
+    path('', login_required(views.doctor_index), name='doctor_index'),
+    path('profile/', views.doctor_profile_view, name='doctor_profile'),
+    path('patients/', views.doctor_patient_list, name='doctor_patient_list'),
+    path('schedule/', views.doctor_daily_schedule_view, name='doctor_daily_schedule'),
 ]
